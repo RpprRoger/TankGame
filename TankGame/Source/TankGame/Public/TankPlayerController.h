@@ -16,5 +16,8 @@ class TANKGAME_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 	
 public:
+	// Called at the start of the game or when spawned
+	void BeginPlay() override;
+
 	ATank* GetControlledTank() const;
 };
