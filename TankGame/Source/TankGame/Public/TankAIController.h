@@ -8,13 +8,13 @@
 #include "TankAIController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class TANKGAME_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+
 public:
 	// Called at the start of the game or when spawned
 	void BeginPlay() override;
