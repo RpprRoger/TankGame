@@ -19,5 +19,7 @@ public:
 	// Called at the start of the game or when spawned
 	void BeginPlay() override;
 
+private:
 	ATank* GetControlledTank() const;
+	ATank* GetPlayerControlledTank() const;
 };
