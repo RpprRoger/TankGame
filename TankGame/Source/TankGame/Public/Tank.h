@@ -34,22 +34,23 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
-private:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrel(UTankBarrel* BarrelToSet);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurret(UTankTurret* TurretToSet);
 
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float FireLaunchSpeed = 40000.f;
-
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	TSubclassOf<AShell> ProjectileBlueprint = nullptr; // Alternative https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float FireLaunchSpeed = 40000.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTimeInSeconds = 3.f;
+
+private:
 	UTankBarrel* Barrel;
 
-	UPROPERTY(EditAnywhere, Category = Firing)
-	float ReloadTimeInSeconds = 3.f;
 	float LastFireTime = 0;
 };

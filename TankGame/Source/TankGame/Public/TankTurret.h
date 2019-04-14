@@ -17,6 +17,6 @@ class TANKGAME_API UTankTurret : public UStaticMeshComponent
 public:
 	void Rotate(float RelativeSpeed);
 
-	UPROPERTY(EditAnywhere, Category = Aiming)
+	UPROPERTY(EditDefaultsOnly, Category = Aiming)
 	float RotationDegreesPerSecond = 18.f; // Near the real t-62 from wikipedia
 };

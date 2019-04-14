@@ -19,12 +19,12 @@ public:
     // given a max elevation speed and the frame time
 	void Elevate(float RelativeSpeed);
 
-	UPROPERTY(EditAnywhere, Category = Aiming)
+	UPROPERTY(EditDefaultsOnly, Category = Aiming)
 	float ElevationDegreesPerSecond = 5.f; // Guess at a sensible default
 
-	UPROPERTY(EditAnywhere, Category = Aiming)
+	UPROPERTY(EditDefaultsOnly, Category = Aiming)
 	float MaxBarrelElevation = 20.f; // Near the real t-62 from wikipedia
 
-	UPROPERTY(EditAnywhere, Category = Aiming)
+	UPROPERTY(EditDefaultsOnly, Category = Aiming)
 	float MinBarrelElevation = -1.f; // Near the real t-62 from wikipedia
 };

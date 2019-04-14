@@ -22,14 +22,13 @@ public:
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 
-private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairXLocation = 0.5f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float CrossHairYLocation = 0.3333333333f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange = 1000000.f;
 
 	ATank* GetControlledTank() const;
@@ -37,6 +36,7 @@ private:
 	// the crosshair intersects the world
 	void AimTowardsCrosshair();
 
+private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
 	bool GetLookDirection(FVector& OutLookDirection, FVector2D ScreenLocation) const;
