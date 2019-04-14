@@ -34,3 +34,8 @@ void ATank::AttemptAim(FVector Location)
 {
 	TankAimingComponent->PredictAndMoveTurret(Location, FireLaunchSpeed);
 }
+
+void ATank::Fire()
+{
+    UE_LOG(LogTemp, Warning, TEXT("FIREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"));
+}

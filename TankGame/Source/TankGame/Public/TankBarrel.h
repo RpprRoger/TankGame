@@ -9,7 +9,7 @@
 /**
  * Tank Barrel with barrel configuration and elevation controls
  */
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), hidecategories=("Physics", "Collision") )
+UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKGAME_API UTankBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
@@ -19,7 +19,6 @@ public:
     // given a max elevation speed and the frame time
 	void Elevate(float RelativeSpeed);
 
-private:
 	UPROPERTY(EditAnywhere, Category = Aiming)
 	float ElevationDegreesPerSecond = 5.f; // Guess at a sensible default
 

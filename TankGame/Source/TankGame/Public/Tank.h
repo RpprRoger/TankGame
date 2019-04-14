@@ -36,6 +36,9 @@ private:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurret(UTankTurret* TurretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float FireLaunchSpeed = 40000.f;
 };

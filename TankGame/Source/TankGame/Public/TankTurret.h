@@ -9,15 +9,14 @@
 /**
  *
  */
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent), hidecategories=("Physics", "Collision") )
+UCLASS(Blueprintable, BlueprintType, ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class TANKGAME_API UTankTurret : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 
-private:
-	UPROPERTY(EditAnywhere, Category = Aiming)
-	float RotationDegreesPerSecond = 18.f; // Near the real t-62 from wikipedia
-
 public:
 	void Rotate(float RelativeSpeed);
+
+	UPROPERTY(EditAnywhere, Category = Aiming)
+	float RotationDegreesPerSecond = 18.f; // Near the real t-62 from wikipedia
 };
