@@ -31,7 +31,11 @@ void UTankAimingComponent::PredictAndMoveTurret(FVector AimWorldLocation, float 
 		LaunchVelocity,
 		StartLocation,
 		AimWorldLocation,
-		LaunchSpeed
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace // Parameters must be present to reliably get aiming solution
 	);
 
 	if (bHaveAimSolution)
@@ -39,6 +43,9 @@ void UTankAimingComponent::PredictAndMoveTurret(FVector AimWorldLocation, float 
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
 
 		MoveBarrelTowards(AimDirection);
+		UE_LOG(LogTemp, Warning, TEXT("%f aim solution found"), GetWorld()->GetTimeSeconds());
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("%f NO***** aim solution found"), GetWorld()->GetTimeSeconds());
 	}
 }
 
