@@ -30,18 +30,16 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UTankAimingComponent::AimAt(FVector Location)
+void UTankAimingComponent::AimAt(FVector Location, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
-
-	auto OurTankName = GetOwner()->GetName();
 
 	UE_LOG(
 		LogTemp,
 		Warning,
-		TEXT("TankAimingComponent: Tank %s aiming at: %s from: %s"),
-		*OurTankName,
+		TEXT("aiming at: %s from: %s at %f"),
 		*Location.ToString(),
-		*Barrel->GetComponentLocation().ToString()
+		*Barrel->GetComponentLocation().ToString(),
+		LaunchSpeed
 	);
 }
