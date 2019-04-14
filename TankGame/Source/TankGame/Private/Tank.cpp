@@ -19,6 +19,12 @@ ATank::ATank()
 	}
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	LastFireTime = -1 * ReloadTimeInSeconds;
+}
+
 void ATank::SetBarrel(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrel(BarrelToSet);
@@ -43,13 +49,19 @@ void ATank::AttemptAim(FVector Location)
 
 void ATank::Fire()
 {
-	if (!Barrel || !ProjectileBlueprint) { return; }
+	float GameRunTimeSeconds = GetWorld()->GetTimeSeconds();
+	bool bIsTankReloaded = GameRunTimeSeconds - LastFireTime >= ReloadTimeInSeconds;
 
-	AShell* Projectile = GetWorld()->SpawnActor<AShell>(
-		ProjectileBlueprint,
-		Barrel->GetSocketLocation(FName("Muzzle")),
-		Barrel->GetSocketRotation(FName("Muzzle"))
-	);
+	if (bIsTankReloaded && Barrel && ProjectileBlueprint)
+	{
+		LastFireTime = GameRunTimeSeconds;
 
-	Projectile->Launch(FireLaunchSpeed);
+		AShell* Projectile = GetWorld()->SpawnActor<AShell>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Muzzle")),
+			Barrel->GetSocketRotation(FName("Muzzle"))
+		);
+
+		Projectile->Launch(FireLaunchSpeed);
+	}
 }

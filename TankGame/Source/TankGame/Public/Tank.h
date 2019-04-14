@@ -27,6 +27,7 @@ protected:
 public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void BeginPlay() override;
 
 	void AttemptAim(FVector Location);
 
@@ -47,4 +48,8 @@ private:
 	TSubclassOf<AShell> ProjectileBlueprint = nullptr; // Alternative https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
 
 	UTankBarrel* Barrel;
+
+	UPROPERTY(EditAnywhere, Category = Firing)
+	float ReloadTimeInSeconds = 3.f;
+	float LastFireTime = 0;
 };
