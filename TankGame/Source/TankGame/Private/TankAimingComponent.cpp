@@ -11,24 +11,12 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
 void UTankAimingComponent::SetBarrel(UStaticMeshComponent* BarrelToSet)
 {
 	Barrel = BarrelToSet;
-}
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-}
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
 void UTankAimingComponent::AimAt(FVector AimWorldLocation, float LaunchSpeed)
@@ -38,27 +26,33 @@ void UTankAimingComponent::AimAt(FVector AimWorldLocation, float LaunchSpeed)
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Muzzle"));
 
 	FVector LaunchVelocity;
-	bool bCanLaunch = UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		LaunchVelocity,
 		StartLocation,
 		AimWorldLocation,
 		LaunchSpeed,
-		false,
-		0,
-		0,
 		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 
-	if (bCanLaunch)
+	if (bHaveAimSolution)
 	{
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
 
-		UE_LOG(
-			LogTemp,
-			Warning,
-			TEXT("aiming at: %s from"),
-			*AimDirection.ToString()
-		);
+		MoveBarrelTowards(AimDirection);
 	}
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector TargetPosition)
+{
+	if (!Barrel) { return; }
+	// Current Barrel rotation
+	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
+	// Calculate delta to target position
+	auto DeltaRotator = TargetPosition.Rotation() - BarrelRotation;
+
+	// Calculate Roll, Pitch, and Yaw to make barrel match TargetPosition
+
+
+	// Apply result to barrel mesh
 }
