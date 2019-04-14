@@ -18,6 +18,7 @@ class TANKGAME_API ATankAIController : public AAIController
 public:
 	// Called at the start of the game or when spawned
 	void BeginPlay() override;
+	void Tick(float DeltaSeconds) override;
 
 private:
 	ATank* GetControlledTank() const;
