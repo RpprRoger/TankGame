@@ -20,20 +20,18 @@ void UTankAimingComponent::SetBarrel(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector AimWorldLocation, float LaunchSpeed)
+void UTankAimingComponent::PredictAndMoveTurret(FVector AimWorldLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
 
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Muzzle"));
-
 	FVector LaunchVelocity;
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
 		this,
 		LaunchVelocity,
 		StartLocation,
 		AimWorldLocation,
-		LaunchSpeed,
-		ESuggestProjVelocityTraceOption::DoNotTrace
+		LaunchSpeed
 	);
 
 	if (bHaveAimSolution)

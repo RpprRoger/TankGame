@@ -18,7 +18,7 @@ public:
 	UTankAimingComponent();
 
 public:
-	void AimAt(FVector AimWorldLocation, float LaunchSpeed); // TODO: Find sensible default
+	void PredictAndMoveTurret(FVector AimWorldLocation, float LaunchSpeed); // TODO: Find sensible default
 
 	void SetBarrel(UTankBarrel* BarrelToSet);
 

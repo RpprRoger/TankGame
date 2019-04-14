@@ -3,7 +3,8 @@
 
 #include "TankBarrel.h"
 
-void UTankBarrel::Elevate(float DegreesPerSecond)
+// -1 is max downward speed, 1 is max upward speed
+void UTankBarrel::Elevate(float RelativeSpeed)
 {
     // Move the barrel the right amount this frame
     // given a max elevation speed and the frame time

@@ -17,7 +17,7 @@ class TANKGAME_API UTankBarrel : public UStaticMeshComponent
 public:
     // Move the barrel the right amount this frame
     // given a max elevation speed and the frame time
-	void Elevate(float DegreesPerSecond);
+	void Elevate(float RelativeSpeed);
 
 private:
 	UPROPERTY(EditAnywhere, Category = Aiming)
