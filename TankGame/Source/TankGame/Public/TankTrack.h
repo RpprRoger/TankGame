@@ -19,4 +19,8 @@ public:
 	// TODO Clamp actual throttle so user can't overdrive
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetThrottle(float Throttle);
+
+	// The max force to apply to this track, in newtons
+	UPROPERTY(EditDefaultsOnly)
+	float MaxDrivingForce = 400000.f; // Assume tank of 40 tonne and 1g of acceleration
 };
