@@ -21,7 +21,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere, Category = Aiming)
-	float ElevationDegreesPerSecond = 20.f; // Guess at a sensible default
+	float ElevationDegreesPerSecond = 5.f; // Guess at a sensible default
 
 	UPROPERTY(EditAnywhere, Category = Aiming)
 	float MaxBarrelElevation = 40.f; // Guess at a sensible default

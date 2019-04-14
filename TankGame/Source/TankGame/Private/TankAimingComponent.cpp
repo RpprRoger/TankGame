@@ -43,9 +43,6 @@ void UTankAimingComponent::PredictAndMoveTurret(FVector AimWorldLocation, float 
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
 
 		MoveBarrelTowards(AimDirection);
-		UE_LOG(LogTemp, Warning, TEXT("%f aim solution found"), GetWorld()->GetTimeSeconds());
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("%f NO***** aim solution found"), GetWorld()->GetTimeSeconds());
 	}
 }
 
@@ -58,5 +55,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector TargetPosition)
 	auto DeltaRotator = TargetPosition.Rotation() - BarrelRotation;
 
 	// Apply result to barrel mesh
-	Barrel->Elevate(5); // TODO remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch); // TODO remove magic number
 }
