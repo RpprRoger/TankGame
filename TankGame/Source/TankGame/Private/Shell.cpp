@@ -29,8 +29,6 @@ void AShell::Tick(float DeltaTime)
 
 void AShell::Launch(float Speed)
 {
-    UE_LOG(LogTemp, Warning, TEXT("Launch this"));
-
 	ShellMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ShellMovement->Activate();
 }
