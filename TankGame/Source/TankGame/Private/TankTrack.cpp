@@ -3,13 +3,17 @@
 
 #include "TankTrack.h"
 
-void UTankTrack::SetThrottle(float Throttle) {
-    UE_LOG(LogTemp, Warning, TEXT("Throttle: %f"), Throttle);
+void UTankTrack::SetThrottle(float Throttle)
+{
+    UE_LOG(LogTemp, Warning, TEXT("%s Throttle: %f"), *GetName(), Throttle);
 
-    auto ClampedThrottle = FMath::Clamp<float>(Throttle, -1, 1);
-    auto ForceApplied = GetForwardVector() * ClampedThrottle * MaxDrivingForce;
-    auto ForceLocation = GetComponentLocation();
-    auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
+    if (Throttle && Throttle != 0.f)
+    {
+        auto ClampedThrottle = FMath::Clamp<float>(Throttle, -1, 1);
+        auto ForceApplied = GetForwardVector() * ClampedThrottle * MaxDrivingForce;
+        auto ForceLocation = GetComponentLocation();
+        auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
-    TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+        TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+    }
 }
