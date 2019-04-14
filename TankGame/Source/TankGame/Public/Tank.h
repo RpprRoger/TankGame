@@ -44,7 +44,7 @@ public:
 	TSubclassOf<AShell> ProjectileBlueprint = nullptr; // Alternative https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-	float FireLaunchSpeed = 40000.f;
+	float FireLaunchSpeed = 4000.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3.f;
