@@ -2,6 +2,7 @@
 
 
 #include "TankAimingComponent.h"
+#include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
@@ -12,6 +13,10 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 }
 
+void UTankAimingComponent::SetBarrel(UStaticMeshComponent* BarrelToSet)
+{
+	Barrel = BarrelToSet;
+}
 
 // Called when the game starts
 void UTankAimingComponent::BeginPlay()
@@ -27,7 +32,16 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UTankAimingComponent::AimAt(FVector Location)
 {
+	if (!Barrel) { return; }
+
 	auto OurTankName = GetOwner()->GetName();
 
-	UE_LOG(LogTemp, Warning, TEXT("TankAimingComponent: Tank %s aiming at: %s"), *OurTankName, *Location.ToString());
+	UE_LOG(
+		LogTemp,
+		Warning,
+		TEXT("TankAimingComponent: Tank %s aiming at: %s from: %s"),
+		*OurTankName,
+		*Location.ToString(),
+		*Barrel->GetComponentLocation().ToString()
+	);
 }
