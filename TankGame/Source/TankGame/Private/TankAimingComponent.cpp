@@ -5,6 +5,7 @@
 #include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
+#include "TankBarrel.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -14,7 +15,7 @@ UTankAimingComponent::UTankAimingComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UTankAimingComponent::SetBarrel(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrel(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -48,11 +49,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector TargetPosition)
 	if (!Barrel) { return; }
 	// Current Barrel rotation
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
-	// Calculate delta to target position
+	// Calculate Roll, Pitch, and Yaw to make barrel match TargetPosition
 	auto DeltaRotator = TargetPosition.Rotation() - BarrelRotation;
 
-	// Calculate Roll, Pitch, and Yaw to make barrel match TargetPosition
-
-
 	// Apply result to barrel mesh
+	Barrel->Elevate(5); // TODO remove magic number
 }
