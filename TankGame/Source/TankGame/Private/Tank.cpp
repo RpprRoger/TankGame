@@ -43,13 +43,13 @@ void ATank::AttemptAim(FVector Location)
 
 void ATank::Fire()
 {
-    UE_LOG(LogTemp, Warning, TEXT("FIREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"));
-
 	if (!Barrel || !ProjectileBlueprint) { return; }
 
-	GetWorld()->SpawnActor<AShell>(
+	AShell* Projectile = GetWorld()->SpawnActor<AShell>(
 		ProjectileBlueprint,
 		Barrel->GetSocketLocation(FName("Muzzle")),
 		Barrel->GetSocketRotation(FName("Muzzle"))
 	);
+
+	Projectile->Launch(FireLaunchSpeed);
 }
