@@ -37,5 +37,5 @@ private:
 	void SetTurret(UTankTurret* TurretToSet);
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float FireLaunchSpeed = 1000000.f;
+	float FireLaunchSpeed = 40000.f;
 };

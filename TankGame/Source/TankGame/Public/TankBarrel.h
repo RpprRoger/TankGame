@@ -27,5 +27,5 @@ private:
 	float MaxBarrelElevation = 20.f; // Near the real t-62 from wikipedia
 
 	UPROPERTY(EditAnywhere, Category = Aiming)
-	float MinBarrelElevation = -2.f; // Near the real t-62 from wikipedia
+	float MinBarrelElevation = -1.f; // Near the real t-62 from wikipedia
 };
