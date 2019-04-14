@@ -4,6 +4,7 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "TankAimingComponent.h"
+#include "Shell.h"
 
 // Sets default values
 ATank::ATank()
@@ -12,11 +13,16 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 
 	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+
+	if (!ProjectileBlueprint) {
+		UE_LOG(LogTemp, Error, TEXT("Tank %s is missing ProjectileBlueprint"), *GetName());
+	}
 }
 
 void ATank::SetBarrel(UTankBarrel* BarrelToSet)
 {
 	TankAimingComponent->SetBarrel(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 void ATank::SetTurret(UTankTurret* TurretToSet)
@@ -38,4 +44,12 @@ void ATank::AttemptAim(FVector Location)
 void ATank::Fire()
 {
     UE_LOG(LogTemp, Warning, TEXT("FIREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"));
+
+	if (!Barrel || !ProjectileBlueprint) { return; }
+
+	GetWorld()->SpawnActor<AShell>(
+		ProjectileBlueprint,
+		Barrel->GetSocketLocation(FName("Muzzle")),
+		Barrel->GetSocketRotation(FName("Muzzle"))
+	);
 }

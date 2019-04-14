@@ -10,6 +10,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class AShell;
 
 UCLASS()
 class TANKGAME_API ATank : public APawn
@@ -41,4 +42,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float FireLaunchSpeed = 40000.f;
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AShell> ProjectileBlueprint = nullptr; // Alternative https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
+
+	UTankBarrel* Barrel;
 };
