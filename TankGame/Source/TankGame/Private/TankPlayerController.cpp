@@ -3,6 +3,7 @@
 #include "TankPlayerController.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/Actor.h"
+#include "Engine/World.h"
 #include "DrawDebugHelpers.h"
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -34,29 +35,31 @@ ATank* ATankPlayerController::GetControlledTank() const
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) const
 {
-    OutHitLocation = FVector(1.f, 2.f, 3.f);
+    int32 ViewportSizeX, ViewportSizeY;
+    GetViewportSize(ViewportSizeX, ViewportSizeY);
 
-	FVector PlayerViewPointLocation;
-	FRotator PlayerViewPointRotation;
-    GetPlayerViewPoint(
-		PlayerViewPointLocation,
-		PlayerViewPointRotation
-	);
+    // the crosshair position relative to the viewport size
+    auto CrosshairPosition = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairXLocation);
 
-    auto EndLine = PlayerViewPointLocation + PlayerViewPointRotation.Vector() * 60000.f;
+	FVector LookDirection;
+    const bool Ok = GetLookDirection(CrosshairPosition, LookDirection);
 
-    DrawDebugLine(
-        GetWorld(),
-        PlayerViewPointLocation,
-        EndLine,
-        FColor(255, 0, 0),
-        false,
-        0,
-        0,
-        10.f
-    );
+
+    // Line-trace along that look direction, and see what we hit (up to a max range);
 
     return false;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+{
+    /// De-project the screen position of the crosshair to a world direction
+	FVector CameraWorldLocation;
+    return DeprojectScreenPositionToWorld(
+        ScreenLocation.X,
+        ScreenLocation.Y,
+        CameraWorldLocation,
+        LookDirection
+    );
 }
 
 void ATankPlayerController::AimTowardsCrosshair()
