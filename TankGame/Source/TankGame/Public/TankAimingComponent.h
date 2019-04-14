@@ -25,7 +25,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void AimAt(FVector Location, float LaunchSpeed); // TODO: Find sensible default
+	void AimAt(FVector AimWorldLocation, float LaunchSpeed); // TODO: Find sensible default
 
 	void SetBarrel(UStaticMeshComponent* BarrelToSet);
 

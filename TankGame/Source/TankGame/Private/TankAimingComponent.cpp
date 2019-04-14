@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -30,16 +31,34 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
 
-void UTankAimingComponent::AimAt(FVector Location, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector AimWorldLocation, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
 
-	UE_LOG(
-		LogTemp,
-		Warning,
-		TEXT("aiming at: %s from: %s at %f"),
-		*Location.ToString(),
-		*Barrel->GetComponentLocation().ToString(),
-		LaunchSpeed
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Muzzle"));
+
+	FVector LaunchVelocity;
+	bool bCanLaunch = UGameplayStatics::SuggestProjectileVelocity(
+		this,
+		LaunchVelocity,
+		StartLocation,
+		AimWorldLocation,
+		LaunchSpeed,
+		false,
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
+
+	if (bCanLaunch)
+	{
+		auto AimDirection = LaunchVelocity.GetSafeNormal();
+
+		UE_LOG(
+			LogTemp,
+			Warning,
+			TEXT("aiming at: %s from"),
+			*AimDirection.ToString()
+		);
+	}
 }
