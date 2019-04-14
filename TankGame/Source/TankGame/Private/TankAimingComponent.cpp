@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -20,9 +21,14 @@ void UTankAimingComponent::SetBarrel(UTankBarrel* BarrelToSet)
 	Barrel = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurret(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
+}
+
 void UTankAimingComponent::PredictAndMoveTurret(FVector AimWorldLocation, float LaunchSpeed)
 {
-	if (!Barrel) { return; }
+	if (!Barrel || !Turret) { return; }
 
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Muzzle"));
 	FVector LaunchVelocity;
@@ -42,18 +48,19 @@ void UTankAimingComponent::PredictAndMoveTurret(FVector AimWorldLocation, float 
 	{
 		auto AimDirection = LaunchVelocity.GetSafeNormal();
 
-		MoveBarrelTowards(AimDirection);
+		AimCannonAt(AimDirection);
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(FVector TargetPosition)
+void UTankAimingComponent::AimCannonAt(FVector TargetPosition)
 {
-	if (!Barrel) { return; }
+	if (!Barrel || !Turret) { return; }
 	// Current Barrel rotation
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
 	// Calculate Roll, Pitch, and Yaw to make barrel match TargetPosition
 	auto DeltaRotator = TargetPosition.Rotation() - BarrelRotation;
 
 	// Apply result to barrel mesh
-	Barrel->Elevate(DeltaRotator.Pitch); // TODO remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
 }
