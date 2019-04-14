@@ -4,7 +4,7 @@
 #include "TankTrack.h"
 
 void UTankTrack::SetThrottle(float Throttle) {
-    UE_LOG(LogTemp, Warning, TEXT("Throttle: %s"), Throttle);
+    UE_LOG(LogTemp, Warning, TEXT("Throttle: %f"), Throttle);
 
     auto ClampedThrottle = FMath::Clamp<float>(Throttle, -1, 1);
     auto ForceApplied = GetForwardVector() * ClampedThrottle * MaxDrivingForce;
